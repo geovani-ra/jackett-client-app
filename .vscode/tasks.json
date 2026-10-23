@@ -1,0 +1,12 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "shell",
+            "type": "shell",
+            "command": "docker run --rm -it -u \"$(id -u):$(id -g)\" -p 8081:8081 -p 5174:5174 -v \"${workspaceFolder}:/app\" -w /app node:24.16.0-alpine sh",
+            "isBackground": false,
+            "problemMatcher": []
+        }
+    ]
+}
