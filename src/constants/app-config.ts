@@ -1,4 +1,3 @@
-
 import { Platform } from 'react-native';
 
 export const Colors = {
@@ -105,7 +104,6 @@ export const DEFAULT_SEARCH_HISTORY_LIMIT = 10;
 
 export const SEARCH_HISTORY_LIMIT_MIN = 1;
 export const SEARCH_HISTORY_LIMIT_MAX = 100;
-
 
 export function clampValue(value: number, min: number, max: number): number {
     return Math.min(max, Math.max(min, Math.floor(value)));

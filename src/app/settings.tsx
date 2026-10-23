@@ -53,12 +53,8 @@ export default function SettingsScreen() {
         message: string;
     } | null>(null);
 
-   
     useEffect(() => {
         if (ready) {
-           
-           
-           
             setBaseUrl(settings.baseUrl);
             setApiKey(settings.apiKey);
             setAuthUser(settings.authUser ?? '');
@@ -78,8 +74,6 @@ export default function SettingsScreen() {
             );
             setSortOrder(settings.sortOrder ?? DEFAULT_RESULT_SORT);
         }
-       
-       
     }, [ready]);
 
     const handleSave = async () => {
@@ -130,7 +124,6 @@ export default function SettingsScreen() {
         setTesting(true);
         setStatus(null);
         try {
-           
             const networkConfig = {
                 auth: {
                     username: authUser.trim() || undefined,
@@ -459,8 +452,7 @@ const styles = StyleSheet.create({
     },
     scrollContent: {
         gap: Spacing.three,
-       
-       
+
         paddingBottom: BottomTabInset,
     },
     formCard: {

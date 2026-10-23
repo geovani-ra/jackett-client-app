@@ -1,4 +1,3 @@
-
 import {
     DEFAULT_REQUEST_RETRIES,
     DEFAULT_TIMEOUT_SECONDS,
@@ -27,9 +26,9 @@ export interface JackettSearchResult {
     TrackerId: string;
     Title: string;
     Guid: string;
-    
+
     Link: string;
-    
+
     Details: string;
     Date?: string;
     Size?: number;
@@ -50,17 +49,16 @@ export interface JackettSearchResponse {
 
 export interface SearchOptions {
     query: string;
-    
+
     trackers?: string[];
-    
+
     categories?: string[];
     limit?: number;
 }
 
 export class JackettError extends Error {
-    
     readonly transient: boolean;
-    
+
     readonly cancelled: boolean;
 
     constructor(message: string, transient = false, cancelled = false) {
@@ -71,19 +69,16 @@ export class JackettError extends Error {
     }
 }
 
-
 export interface AuthOptions {
     username?: string;
     password?: string;
 }
 
-
 export interface NetworkOptions {
-    
     timeoutMs?: number;
-    
+
     retries?: number;
- 
+
     signal?: AbortSignal;
 }
 
@@ -150,7 +145,7 @@ function buildHeaders(auth?: AuthOptions): Record<string, string> {
 function delay(ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
- 
+
 async function withRetry<T>(
     operation: () => Promise<T>,
     retries: number,
@@ -180,7 +175,6 @@ async function requestOnce<T>(
     timeoutMs: number,
     signal: AbortSignal | undefined,
 ): Promise<T> {
-    
     if (signal?.aborted) {
         throw new JackettError('Requisição cancelada.', false, true);
     }
@@ -189,14 +183,12 @@ async function requestOnce<T>(
     url.searchParams.set('apikey', apiKey);
     for (const [key, value] of Object.entries(params)) {
         if (Array.isArray(value)) {
-            
             for (const item of value) url.searchParams.append(`${key}[]`, item);
         } else if (value) {
             url.searchParams.set(key, value);
         }
     }
 
-    
     const controller = new AbortController();
     const onExternalAbort = () => controller.abort();
     signal?.addEventListener('abort', onExternalAbort);
@@ -207,10 +199,7 @@ async function requestOnce<T>(
             signal: controller.signal,
             headers: buildHeaders(auth),
         });
-        
-        
-        
-        
+
         const contentType = (
             response.headers.get('content-type') ?? ''
         ).toLowerCase();
@@ -218,7 +207,6 @@ async function requestOnce<T>(
 
         if (!response.ok) {
             if (response.status === 401 || response.status === 403) {
-                
                 throw new JackettError(
                     'Acesso não autorizado (HTTP ' +
                         `${response.status}). Verifique a API key e, se o servidor/proxy exigir ` +
@@ -226,7 +214,6 @@ async function requestOnce<T>(
                 );
             }
             if (redirected && !contentType.includes('json')) {
-                
                 throw new JackettError(
                     'A requisição foi redirecionada para a página de login do Jackett ' +
                         `(terminou em HTTP ${response.status}). Isso indica que a API key está ` +
@@ -234,7 +221,7 @@ async function requestOnce<T>(
                         '(ou no ServerConfig.json do container).',
                 );
             }
-            
+
             const transient = response.status === 429 || response.status >= 500;
             throw new JackettError(
                 `O servidor respondeu com erro HTTP ${response.status}.`,
@@ -262,7 +249,7 @@ async function requestOnce<T>(
         }
     } catch (error) {
         if (error instanceof JackettError) throw error;
-        
+
         if (signal?.aborted) {
             throw new JackettError('Requisição cancelada.', false, true);
         }

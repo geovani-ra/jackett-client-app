@@ -1,4 +1,3 @@
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
     createContext,
@@ -31,17 +30,17 @@ const STORAGE_KEY = 'jackett-settings-v1';
 export interface Settings {
     baseUrl: string;
     apiKey: string;
-    
+
     authUser?: string;
-    
+
     authPassword?: string;
-    
+
     searchHistoryLimit?: number;
-    
+
     requestTimeoutSeconds?: number;
-    
+
     requestRetries?: number;
-    
+
     sortOrder?: ResultSortOrder;
 }
 

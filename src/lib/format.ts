@@ -1,4 +1,3 @@
-
 export function formatBytes(bytes?: number): string {
     if (bytes == null || Number.isNaN(bytes)) return '—';
     const units = ['B', 'KB', 'MB', 'GB', 'TB'];

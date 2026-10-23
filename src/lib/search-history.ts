@@ -1,4 +1,3 @@
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const HISTORY_KEY = 'jackett-search-history-v1';
@@ -29,14 +28,12 @@ export async function addSearchToHistory(
     );
     try {
         await AsyncStorage.setItem(HISTORY_KEY, JSON.stringify(next));
-    } catch {
-    }
+    } catch {}
     return next;
 }
 
 export async function clearSearchHistory(): Promise<void> {
     try {
         await AsyncStorage.removeItem(HISTORY_KEY);
-    } catch {
-    }
+    } catch {}
 }

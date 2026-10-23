@@ -9,13 +9,12 @@ import { Spacing } from '@/constants/theme';
 export type SelectOption = { value: string; label: string };
 
 type SelectProps = {
-    
     value: string;
-    
+
     options: SelectOption[];
-    
+
     placeholder?: string;
-    
+
     onSelect: (value: string) => void;
 };
 

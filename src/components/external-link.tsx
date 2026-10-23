@@ -17,9 +17,8 @@ export function ExternalLink({ href, ...rest }: Props) {
             href={href}
             onPress={async (event) => {
                 if (process.env.EXPO_OS !== 'web') {
-                   
                     event.preventDefault();
-                    
+
                     await openBrowserAsync(href, {
                         presentationStyle:
                             WebBrowserPresentationStyle.AUTOMATIC,
