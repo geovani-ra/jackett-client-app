@@ -5,6 +5,12 @@ on:
     push:
         branches:
             - main
+        paths:
+            - 'src/**'
+            - 'assets/**'
+            - 'app.json'
+            - 'eas.json'
+            - 'package.json'
 
 permissions:
     contents: read
